@@ -6,6 +6,7 @@ const express = require('express');
 const log4js = require('log4js');
 const localConfig = require('./config/local.json');
 const path = require('path');
+const request = require('request')
 
 const logger = log4js.getLogger(appName);
 logger.level = process.env.LOG_LEVEL || 'info'
@@ -17,6 +18,7 @@ require('./routers/index')(app, server);
 
 // Add your code here
 
+var debug = false;
 const apikey = "2276454694917418ea5bacdffa49e101";
 
 app.get('/', (req, res) => {
@@ -34,8 +36,6 @@ app.get('/getWeather', (req, res) => {
 
     request.post(options, function(error, response, body) {
         if (!error) {
-            requestsCount++;
-            console.log("API Called " + requestsCount + " time (s)");
 
             if (debug) {
                 console.log("\n::: Response from Weather Api :::\n");
