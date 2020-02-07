@@ -20,16 +20,14 @@
                             var city = $('#city');
                             city.html('');
 
-                            var latitude = $('#lat').val();
-                            var longitude = $('#lon').val();
+                            var getCity = $('#getCity').val();
 
                             $
                                 .ajax({
                                     url: '/getWeather',
                                     method: 'get',
                                     data: {
-                                        lat: latitude,
-                                        lon: longitude
+                                        getCity: getCity
                                     },
                                     dataType: 'json',
                                     success: function(
@@ -83,23 +81,34 @@
 
     <div class="jumbotron text-center">
         <h1>Weather Application</h1>
-        <!-- <p>Built with Codewind!</p> -->
+        <p>Built with Codewind!</p>
     </div>
 
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading" align="center">Enter Latitude and Longitude
+                <div class="panel-heading" align="center">Enter City Name
                 </div>
                 <div class="panel-body">
 
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Latitude" name="lat" id="lat" />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" placeholder="City Name" name="getCity" id="getCity" />
+                            </div>
+                        </div>
                         <div>&nbsp;</div>
-                        <input type="text" class="form-control" placeholder="Longitude" name="lon" id="lon" />
-                        <div>&nbsp;</div>
-                        <button class="btn btn-primary btn-block" type="submit" id="btnSubmit" align="center">Submit</button>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-primary btn-block" type="submit" id="btnSubmit" align="center">Submit</button>
+                            </div>
+
+                        </div>
+
+
+
+
                     </div>
 
                 </div>

@@ -28,7 +28,11 @@ app.get('/', (req, res) => {
 app.get('/getWeather', (req, res) => {
     var lat = req.query.lat;
     var lon = req.query.lon;
-    var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
+    var getCity = req.query.getCity;
+
+    var url = "http://api.openweathermap.org/data/2.5/weather?q=" + getCity + "&appid=" + apikey;
+
+    // var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
 
     var options = {
         url: url
