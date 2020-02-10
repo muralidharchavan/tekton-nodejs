@@ -30,9 +30,17 @@ app.get('/getWeather', (req, res) => {
     var lon = req.query.lon;
     var getCity = req.query.getCity;
 
-    var url = "http://api.openweathermap.org/data/2.5/weather?q=" + getCity + "&appid=" + apikey;
+    if (getCity != null) {
+        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + getCity + "&appid=" + apikey;
+    }
 
-    // var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
+    if (lat != null && lon != null) {
+        var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey;
+    }
+
+    if (getCity != null && lat != null || getCity != null && lat != null || getCity != null && lat != null && lon != null) {
+        var url = "http://api.openweathermap.org/data/2.5/weather?q=" + getCity + "&appid=" + apikey;
+    }
 
     var options = {
         url: url

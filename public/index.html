@@ -7,6 +7,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+    .center {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+</style>
 <script type="text/javascript">
     $(document)
         .ready(
@@ -21,14 +28,31 @@
                             city.html('');
 
                             var getCity = $('#getCity').val();
+                            var lat = $('#lat').val();
+                            var lon = $('#lon').val();
+                            var Data;
+                            if (!$.trim(getCity)) {
+                                Data = {
+                                    lat: lat,
+                                    lon: lon
+                                }
+                            }
+                            if (!$.trim(lat)) {
+                                Data = {
+                                    getCity: getCity
+                                }
+                            }
+                            if (!$.trim(lon)) {
+                                Data = {
+                                    getCity: getCity
+                                }
+                            }
 
                             $
                                 .ajax({
                                     url: '/getWeather',
                                     method: 'get',
-                                    data: {
-                                        getCity: getCity
-                                    },
+                                    data: Data,
                                     dataType: 'json',
                                     success: function(
                                         response) {
@@ -43,7 +67,7 @@
 
                                             resultElement
                                                 .html('<div class=\"panel panel-default\">' +
-                                                    '<div class=\"panel-heading\" align=\"center\">Weather in ' +
+                                                    '<div class=\"panel-heading\" align=\"center\">Current Weather in ' +
                                                     response.name +
                                                     '</div>' +
                                                     '<div class=\"panel-body\" align=\"center\"> Temperature : <b>' +
@@ -54,13 +78,13 @@
                                                     ' °C </b> and Maximum Temp is <b>' +
                                                     parseInt(celciusmax) +
                                                     ' °C </b> </div>' +
-                                                    '<div class=\"panel-body\" align=\"center\"> Sky : <b>' +
-                                                    response.weather[0].main +
-                                                    ' </b> </div>' +
-                                                    '<div class=\"panel-body\" align=\"center\"> Description : <b>' +
+                                                    '<div class=\"panel-body\" align=\"center\"> Weather Description : <b>' +
                                                     response.weather[0].description +
                                                     ' </b> </div>' +
                                                     '</div>');
+
+                                            lat.val = response.coord.lat;
+                                            lon.val = response.coord.lon;
                                         }
                                     },
                                     error: function(err) {
@@ -88,14 +112,25 @@
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading" align="center">Enter City Name
+                <div class="panel-heading" align="center">City Name / Latitude and Longitude
                 </div>
                 <div class="panel-body">
 
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" placeholder="City Name" name="getCity" id="getCity" />
+                                <input type="text" class="form-control" placeholder="Enter City Name" name="getCity" id="getCity" />
+                            </div>
+                        </div>
+
+                        <div align="center" class="center"><b>OR</b></div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Enter Latitude" name="lat" id="lat" />
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Enter Longitude" name="lon" id="lon" />
                             </div>
                         </div>
                         <div>&nbsp;</div>
