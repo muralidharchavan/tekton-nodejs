@@ -7,93 +7,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<style>
-    .center {
-        width: 80%;
-        margin: 0 auto;
-        padding: 20px;
-    }
-</style>
-<script type="text/javascript">
-    $(document)
-        .ready(
-            function() {
-                var resultElement = $('#resultDiv');
-                resultElement.html('');
-                $('#btnSubmit')
-                    .click(
-                        function() {
-
-                            var city = $('#city');
-                            city.html('');
-
-                            var getCity = $('#getCity').val();
-                            var lat = $('#lat').val();
-                            var lon = $('#lon').val();
-                            var Data;
-                            if (!$.trim(getCity)) {
-                                Data = {
-                                    lat: lat,
-                                    lon: lon
-                                }
-                            }
-                            if (!$.trim(lat)) {
-                                Data = {
-                                    getCity: getCity
-                                }
-                            }
-                            if (!$.trim(lon)) {
-                                Data = {
-                                    getCity: getCity
-                                }
-                            }
-
-                            $
-                                .ajax({
-                                    url: '/getWeather',
-                                    method: 'get',
-                                    data: Data,
-                                    dataType: 'json',
-                                    success: function(
-                                        response) {
-                                        if (response.message != null) {
-                                            resultElement
-                                                .html(response.message);
-                                        } else {
-
-                                            celcius = response.main.temp - 273.15;
-                                            celciusmin = response.main.temp_min - 273.15;
-                                            celciusmax = response.main.temp_max - 273.15;
-
-                                            resultElement
-                                                .html('<div class=\"panel panel-default\">' +
-                                                    '<div class=\"panel-heading\" align=\"center\">Current Weather in ' +
-                                                    response.name +
-                                                    '</div>' +
-                                                    '<div class=\"panel-body\" align=\"center\"> Temperature : <b>' +
-                                                    parseInt(celcius) +
-                                                    ' °C </b> </div>' +
-                                                    '<div class=\"panel-body\" align=\"center\"> Minimum Temp is <b>' +
-                                                    parseInt(celciusmin) +
-                                                    ' °C </b> and Maximum Temp is <b>' +
-                                                    parseInt(celciusmax) +
-                                                    ' °C </b> </div>' +
-                                                    '<div class=\"panel-body\" align=\"center\"> Weather Description : <b>' +
-                                                    response.weather[0].description +
-                                                    ' </b> </div>' +
-                                                    '</div>');
-
-                                            lat.val = response.coord.lat;
-                                            lon.val = response.coord.lon;
-                                        }
-                                    },
-                                    error: function(err) {
-                                        alert(err.message);
-                                    }
-                                });
-                        });
-            });
-</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="javascript/client-app.js"></script>
 
 <head>
     <title>The Weather Application</title>
@@ -102,12 +18,10 @@
 </head>
 
 <body>
-
-    <div class="jumbotron text-center">
-        <h1>Weather Application</h1>
+    <div class="well text-center">
+        <h1> <i class="fa fa-cloud" style="font-size:36px"></i> Weather Application</h1>
         <p>Built with Codewind!</p>
     </div>
-
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
@@ -136,14 +50,13 @@
                         <div>&nbsp;</div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <button class="btn btn-primary btn-block" type="submit" id="btnSubmit" align="center">Submit</button>
+                                <button class="btn btn-success btn-block" type="submit" id="btnSubmit" align="center">Submit</button>
                             </div>
+                            <div class="col-sm-12">
 
+                                <button class="btn btn-basic btn-block" id="btnGetLocation" align="center"> <i class="fa fa-location-arrow"></i> Detect Location</button>
+                            </div>
                         </div>
-
-
-
-
                     </div>
 
                 </div>
@@ -158,6 +71,10 @@
             <div id="resultDiv"></div>
         </div>
         <div class="col-sm-4"></div>
+    </div>
+
+    <div class="footer">
+        Weather Information provided by &nbsp;<a href="https://openweathermap.org">OpenWeather</a>
     </div>
 
 </body>
